@@ -1,11 +1,11 @@
 Gem::Specification.new do |spec|
   spec.name          = 'nexboard-api'
-  spec.version       = '0.1'
+  spec.version       = '0.1.0'
   spec.authors       = ['Xikolo Development Team']
   spec.email         = %w(xikolo-dev@hpi.uni-potsdam.de)
   spec.description   = %q{Ruby wrapper for Nexboard API (https://nexboard.nexenio.com)}
   spec.summary       = %q{Ruby wrapper for Nexboard API (https://nexboard.nexenio.com)}
-  spec.homepage      = ''
+  spec.homepage      = 'https://github.com/openHPI/nexboard-api'
   spec.license       = ''
 
   spec.files         = Dir['**/*'].grep(/((bin|lib|test|spec|features)\/|
