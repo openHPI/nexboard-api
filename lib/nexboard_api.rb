@@ -35,8 +35,8 @@ class NexboardApi
   end
 
   def get_boards_for_project(project_id:)
-    Restify.new(@base_url + 'projects/{project_id}/boards')
-        .get(project_id: project_id, token: @api_key, userId: @user_id)
+    Restify.new(@base_url + "projects/#{project_id}/boards")
+        .get(token: @api_key, userId: @user_id)
         .value!
   end
 
