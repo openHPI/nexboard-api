@@ -1,3 +1,5 @@
+source 'https://rubygems.org'
+
 gem 'nexboard-api', path: '.'
 
 group :development, :test do
@@ -5,6 +7,7 @@ group :development, :test do
   gem 'rspec'
   gem 'rake'
   gem 'webmock'
+  gem 'pact'
 end
 
 group :test do
