@@ -7,8 +7,8 @@
   },
   "interactions": [
     {
-      "description": "a request for all project ids",
-      "providerState": "some projects exist",
+      "description": "a request to get all projects",
+      "providerState": "user has valid credentials and some projects exist",
       "request": {
         "method": "get",
         "path": "/projects",
@@ -27,6 +27,30 @@
             "project_id": "2"
           }
         ]
+      }
+    },
+    {
+      "description": "a request to create a project",
+      "providerState": "user has valid credentials",
+      "request": {
+        "method": "post",
+        "path": "/projects",
+        "query": "token=RandomApiKey",
+        "body": {
+          "title": "A new project",
+          "description": "This is a new project",
+          "user_id": "1337"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "project_id": "1",
+          "title": "A new project"
+        }
       }
     }
   ],
