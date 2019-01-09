@@ -52,6 +52,53 @@
           "title": "A new project"
         }
       }
+    },
+    {
+      "description": "a request to get boards of a project",
+      "providerState": "user has valid credentials and an existing project with boards",
+      "request": {
+        "method": "get",
+        "path": "/projects/1/boards",
+        "query": "token=RandomApiKey&userId=1337"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": [
+          {
+            "boardId": "101",
+            "title": "A board"
+          }
+        ]
+      }
+    },
+    {
+      "description": "a request to create a project",
+      "providerState": "user has valid credentials and an existing project",
+      "request": {
+        "method": "post",
+        "path": "/boards",
+        "query": "token=RandomApiKey",
+        "body": {
+          "title": "A new project",
+          "description": "This is a new project",
+          "project_id": "1",
+          "user_id": "1337"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "board_id": "101",
+          "project_id": "1",
+          "title": "A new project"
+        }
+      }
     }
   ],
   "metadata": {
