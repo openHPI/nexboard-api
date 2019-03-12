@@ -12,19 +12,19 @@
       "request": {
         "method": "get",
         "path": "/projects",
-        "query": "token=RandomApiKey&userId=1337"
+        "query": "token=OpenHPIAPIKey&userId=__user_id__"
       },
       "response": {
         "status": 200,
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json; charset=utf-8"
         },
         "body": [
           {
-            "project_id": "1"
+            "title": "Project1"
           },
           {
-            "project_id": "2"
+            "title": "Project2"
           }
         ]
       }
@@ -35,20 +35,20 @@
       "request": {
         "method": "post",
         "path": "/projects",
-        "query": "token=RandomApiKey",
+        "query": "token=OpenHPIAPIKey",
         "body": {
           "title": "A new project",
           "description": "This is a new project",
-          "user_id": "1337"
+          "user_id": "__user_id__"
         }
       },
       "response": {
         "status": 200,
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json; charset=utf-8"
         },
         "body": {
-          "project_id": "1",
+          "description": "This is a new project",
           "title": "A new project"
         }
       }
@@ -58,45 +58,44 @@
       "providerState": "user has valid credentials and an existing project with boards",
       "request": {
         "method": "get",
-        "path": "/projects/1/boards",
-        "query": "token=RandomApiKey&userId=1337"
+        "path": "/projects/__project_1_id__/boards",
+        "query": "token=OpenHPIAPIKey&userId=__user_id__"
       },
       "response": {
         "status": 200,
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json; charset=utf-8"
         },
         "body": [
           {
-            "boardId": "101",
+            "description": "This is a great Board",
             "title": "A board"
           }
         ]
       }
     },
     {
-      "description": "a request to create a project",
+      "description": "a request to create a board",
       "providerState": "user has valid credentials and an existing project",
       "request": {
         "method": "post",
         "path": "/boards",
-        "query": "token=RandomApiKey",
+        "query": "token=OpenHPIAPIKey",
         "body": {
-          "title": "A new project",
-          "description": "This is a new project",
-          "project_id": "1",
-          "user_id": "1337"
+          "title": "New Board",
+          "description": "This is a new Board",
+          "project_id": "__project_1_id__",
+          "user_id": "__user_id__"
         }
       },
       "response": {
         "status": 200,
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json; charset=utf-8"
         },
         "body": {
-          "board_id": "101",
-          "project_id": "1",
-          "title": "A new project"
+          "description": "This is a new Board",
+          "title": "New Board"
         }
       }
     }

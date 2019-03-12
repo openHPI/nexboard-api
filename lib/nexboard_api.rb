@@ -31,6 +31,7 @@ class NexboardApi
 
     Restify.new(@base_url + 'projects')
         .post(data, token: @api_key)
+        .headers({'Content-Type' => 'application/json'})
         .value!
   end
 
