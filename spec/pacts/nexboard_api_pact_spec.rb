@@ -1,8 +1,10 @@
 require 'pact_helper'
 
 describe NexboardApi, :pact => true do
-  let(:api_key) { 'RandomApiKey' }
-  let(:user_id) { '1337' }
+  let(:api_key) { 'OpenHPIAPIKey' }
+  let(:user_id) { '__user_id__' }
+  let(:project1_id) { 10001 }
+  let(:project2_id) { 10002 }
   let(:base_url) { 'http://localhost:1234/' }
   let(:params)  { {api_key: api_key, user_id: user_id, base_url: base_url} }
   let(:encoded_credentials) { URI::encode("token=#{api_key}&userId=#{user_id}") }
@@ -11,7 +13,7 @@ describe NexboardApi, :pact => true do
 
 
   describe "get_project_ids" do
-    let(:response) { [{project_id: '1'}, {project_id: '2'}] }
+    let(:response) { [{id: project1_id, title: 'Project1'}, {id: project2_id, title: 'Project2'}] }
 
     before do
       nexboard.given("user has valid credentials and some projects exist").
@@ -19,13 +21,13 @@ describe NexboardApi, :pact => true do
           with(method: :get, path: '/projects', query: encoded_credentials).
           will_respond_with(
               status: 200,
-              headers: {'Content-Type' => 'application/json'},
+              headers: {'Content-Type' => 'application/json; charset=utf-8'},
               body: response)
     end
 
     it "returns the project ids" do
       project_ids = client.get_project_ids
-      expect(project_ids).to eq(['1', '2'])
+      expect(project_ids).to eq([project1_id, project2_id])
     end
 
   end
@@ -33,8 +35,7 @@ describe NexboardApi, :pact => true do
   describe "create_project" do
     let(:title) { 'A new project' }
     let(:description) { 'This is a new project' }
-    let(:project_id) { '1' }
-    let(:response) { {project_id: project_id, title: title} }
+    let(:response) { {description: description, title: title} }
     let(:project_data) { {title: title, description: description} }
     let(:post_body) { {title: title, description: description, user_id: user_id} }
 
@@ -44,62 +45,59 @@ describe NexboardApi, :pact => true do
           with(method: :post, path: '/projects', query: encoded_token, body: post_body).
           will_respond_with(
               status: 200,
-              headers: {'Content-Type' => 'application/json'},
+              headers: {'Content-Type' => 'application/json; charset=utf-8'},
               body: response)
     end
 
     it "returns a new project" do
       project = client.create_project(project_data)
-      expect(project.project_id).to eq(project_id)
+      expect(project.title).to eq(title)
     end
 
   end
 
   describe "get_boards_for_project" do
     let(:title) { 'A board' }
-    let(:project_id) { '1' }
-    let(:board_id) { '101' }
-    let(:response) { [{boardId: board_id, title: title}] }
+    let(:description) { 'This is a great Board'}
+    let(:response) { [{description: description, title: title}] }
 
     before do
       nexboard.given("user has valid credentials and an existing project with boards").
           upon_receiving("a request to get boards of a project").
-          with(method: :get, path: "/projects/#{project_id}/boards", query: encoded_credentials).
+          with(method: :get, path: "/projects/#{project1_id}/boards", query: encoded_credentials).
           will_respond_with(
               status: 200,
-              headers: {'Content-Type' => 'application/json'},
+              headers: {'Content-Type' => 'application/json; charset=utf-8'},
               body: response)
     end
 
     it "returns a new project" do
-      boards = client.get_boards_for_project( {project_id: project_id} )
-      expect(boards.first.boardId).to eq(board_id)
+      boards = client.get_boards_for_project( {project_id: project1_id} )
+      expect(boards.first.title).to eq(title)
     end
 
   end
 
   describe "create_board_for_project" do
-    let(:title) { 'A new project' }
-    let(:description) { 'This is a new project' }
-    let(:project_id) { '1' }
-    let(:board_id) { '101' }
-    let(:response) { {board_id: board_id, project_id: project_id, title: title} }
-    let(:board_data) { {title: title, description: description, project_id: project_id} }
-    let(:post_body) { {title: title, description: description, project_id: project_id, user_id: user_id} }
+    let(:title) { 'New Board' }
+    let(:description) { 'This is a new Board' }
+    let(:response) { {description: description, title: title} }
+    let(:board_data) { {title: title, description: description, project_id: project1_id} }
+    let(:post_body) { {title: title, description: description, project_id: project1_id, user_id: user_id} }
 
     before do
       nexboard.given("user has valid credentials and an existing project").
-          upon_receiving("a request to create a project").
+          upon_receiving("a request to create a board").
           with(method: :post, path: '/boards', query: encoded_token, body: post_body).
           will_respond_with(
               status: 200,
-              headers: {'Content-Type' => 'application/json'},
+              headers: {'Content-Type' => 'application/json; charset=utf-8'},
               body: response)
     end
 
-    it "returns a new project" do
+    it "returns a new Board" do
       board = client.create_board_for_project(board_data)
-      expect(board.board_id).to eq(board_id)
+      expect(board.title).to eq(title)
     end
 
   end

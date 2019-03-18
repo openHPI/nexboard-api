@@ -19,7 +19,7 @@ class NexboardApi
                    .get(userId: @user_id, token: @api_key)
                    .value!
 
-    projects.data.map{|project| project['project_id']}
+    projects.data.map{|project| project['id']}
   end
 
   def create_project(title:, description:)
