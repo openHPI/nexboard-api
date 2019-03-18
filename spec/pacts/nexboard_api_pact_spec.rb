@@ -3,8 +3,8 @@ require 'pact_helper'
 describe NexboardApi, :pact => true do
   let(:api_key) { 'OpenHPIAPIKey' }
   let(:user_id) { '__user_id__' }
-  let(:project1_id) { '__project_1_id__' }
-  let(:project2_id) { '__project_2_id__' }
+  let(:project1_id) { 10001 }
+  let(:project2_id) { 10002 }
   let(:base_url) { 'http://localhost:1234/' }
   let(:params)  { {api_key: api_key, user_id: user_id, base_url: base_url} }
   let(:encoded_credentials) { URI::encode("token=#{api_key}&userId=#{user_id}") }
@@ -13,7 +13,7 @@ describe NexboardApi, :pact => true do
 
 
   describe "get_project_ids" do
-    let(:response) { [{title: 'Project1'}, {title: 'Project2'}] }
+    let(:response) { [{id: project1_id, title: 'Project1'}, {id: project2_id, title: 'Project2'}] }
 
     before do
       nexboard.given("user has valid credentials and some projects exist").

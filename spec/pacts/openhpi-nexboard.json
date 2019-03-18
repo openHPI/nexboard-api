@@ -21,9 +21,11 @@
         },
         "body": [
           {
+            "id": 10001,
             "title": "Project1"
           },
           {
+            "id": 10002,
             "title": "Project2"
           }
         ]
@@ -35,6 +37,9 @@
       "request": {
         "method": "post",
         "path": "/projects",
+        "headers": {
+          "Content-Type": "application/json"
+        },
         "query": "token=OpenHPIAPIKey",
         "body": {
           "title": "A new project",
@@ -58,7 +63,7 @@
       "providerState": "user has valid credentials and an existing project with boards",
       "request": {
         "method": "get",
-        "path": "/projects/__project_1_id__/boards",
+        "path": "/projects/10001/boards",
         "query": "token=OpenHPIAPIKey&userId=__user_id__"
       },
       "response": {
@@ -80,11 +85,14 @@
       "request": {
         "method": "post",
         "path": "/boards",
+        "headers": {
+          "Content-Type": "application/json"
+        },
         "query": "token=OpenHPIAPIKey",
         "body": {
           "title": "New Board",
           "description": "This is a new Board",
-          "project_id": "__project_1_id__",
+          "project_id": 10001,
           "user_id": "__user_id__"
         }
       },
